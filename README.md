@@ -1,32 +1,46 @@
-# MCP Server built with mcp-use
+# WOLFSTRIKE
 
-This is an MCP server project bootstrapped with [`create-mcp-use-app`](https://mcp-use.com/docs/typescript/getting-started/quickstart).
+MCP server untuk penanganan insiden keamanan. Dipanggil oleh AI agent (Hermes, OpenClaw, atau AI coding agent) lewat MCP. Dibangun dengan TypeScript, Node.js, dan [mcp-use](https://mcp-use.com/docs/typescript/getting-started/quickstart).
 
-## Getting Started
+```
+Hermes (agent) --MCP--> WOLFSTRIKE ---> Wazuh, TheHive, VirusTotal, Email, dll
+```
 
-First, run the development server:
+## Modul MVP
+
+Output satu modul jadi input modul berikutnya.
+
+| # | Modul | Output |
+|---|---|---|
+| 1 | Incident Intake | Case insiden |
+| 2 | Triage & Classification | Category, severity, confidence, prioritas, MITRE ATT&CK, Cyber Kill Chain |
+| 3 | MITRE ATT&CK Mapping | Tactic, technique, sub-technique |
+| 4 | Threat Investigation & IOC Enrichment | IOC (IP, SHA-256, MD5, domain), evidence, findings |
+| 5 | Reporting & Response | Incident report, action plan, block IP/IOC |
+
+Batas otomatisasi: block IP/IOC adalah satu-satunya aksi yang dieksekusi. Selain itu hanya rekomendasi.
+
+## Development
+
+Butuh Node.js `>=22.22.2`.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000/mcp/inspector](http://localhost:3000/mcp/inspector) with your browser to test your server.
+- MCP endpoint: http://localhost:3000/mcp
+- Inspector (buat ngetes tool): http://localhost:3000/mcp/inspector
 
-You can start building by editing the entry file. Add tools and prompts — the server auto-reloads as you edit.
+Server auto-reload tiap file diubah. Tool didaftarkan di `index.ts`.
 
-Open [http://localhost:3000/mcp](http://localhost:3000/mcp) in a browser to see the landing page. Edit `landing.tsx` to change it (Tailwind classes work with no extra setup), or delete it to use the built-in page.
+| Script | Fungsi |
+|---|---|
+| `npm run dev` | Dev server + inspector |
+| `npm run typecheck` | Refresh type MCP dan cek TypeScript |
+| `npm run build` | Build production |
+| `npm run start` | Jalankan hasil build |
 
-Run `npm run typecheck` to refresh MCP view types and check the project with its local TypeScript compiler.
+## Lisensi
 
-## Learn More
-
-To learn more about mcp-use and MCP:
-
-- [mcp-use Documentation](https://mcp-use.com/docs/typescript/getting-started/quickstart) — guides, API reference, and tutorials
-
-## Deploy on Manufact Cloud
-
-```bash
-npm run deploy
-```
+MIT
