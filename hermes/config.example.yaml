@@ -1,0 +1,22 @@
+# Potongan untuk ~/.hermes/config.yaml
+# Salin bagian yang dibutuhkan ke config Hermes kamu, lalu ganti nilai <...>.
+# JANGAN commit API key asli ke repo.
+
+# Skill tim: arahkan ke folder hermes/skills di clone repo ini.
+skills:
+  external_dirs:
+    - <path-ke-clone>/csirt-skill-hermes/hermes/skills
+
+# Koneksi ke TheHive 5 lewat thehive-mcp (https://github.com/solomonneas/thehive-mcp)
+mcp_servers:
+  thehive:
+    command: "npx"
+    args: ["-y", "thehive-mcp"]
+    env:
+      THEHIVE_URL: "<https://alamat-thehive:9000>"
+      THEHIVE_API_KEY: "<api-key-thehive>"
+      # Tool yang mengubah data (create/update/close/delete, run analyzer) tetap mati.
+      # Ubah ke "true" hanya kalau tim sudah sepakat Hermes boleh menulis ke TheHive.
+      THEHIVE_ALLOW_DESTRUCTIVE_TOOLS: "false"
+      # Set "false" hanya untuk lab dengan sertifikat self-signed.
+      THEHIVE_VERIFY_SSL: "true"
