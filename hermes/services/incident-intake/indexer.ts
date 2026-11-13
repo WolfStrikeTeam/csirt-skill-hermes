@@ -1,4 +1,4 @@
-import type { IndexerPage, PullRequest, WazuhAlertSource } from "./types.js";
+import type { IndexerPage, PullRequest, WazuhAlertSource } from "../../types/incident-intake.js";
 
 export interface WazuhIndexerConfig {
   url: string;

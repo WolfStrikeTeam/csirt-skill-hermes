@@ -1,12 +1,12 @@
-import { registerIncidentIntakeTools } from "./incident-intake/mcp-tools.js";
+import { registerIncidentIntakeTools } from "./hermes/tools/incident-intake/mcp-tools.js";
 import { MCPServer, text } from "mcp-use"; // atau "mcp-use" sesuai versi package.json kamu
 import { z } from "zod";
 
-import { VirusTotalClient } from "./hermes/tools/virustotal/vt-client";
-import { IOCValidator } from "./hermes/tools/virustotal/vt-validator";
-import { IOCEnricher } from "./hermes/tools/virustotal/vt-enricher";
-import { InvestigationService } from "./hermes/services/investigation-service";
-import { extractIOCs } from "./hermes/services/ioc-extractor";
+import { VirusTotalClient } from "./hermes/tools/virustotal/vt-client.js";
+import { IOCValidator } from "./hermes/tools/virustotal/vt-validator.js";
+import { IOCEnricher } from "./hermes/tools/virustotal/vt-enricher.js";
+import { InvestigationService } from "./hermes/services/investigation-service.js";
+import { extractIOCs } from "./hermes/services/ioc-extractor.js";
 
 // Inisialisasi dependensi VirusTotal & Investigation Service
 const vt = new VirusTotalClient();

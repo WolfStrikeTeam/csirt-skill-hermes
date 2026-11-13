@@ -1,6 +1,6 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { IncidentCase, IntakeResult } from "./types.js";
+import type { IncidentCase, IntakeResult } from "../../types/incident-intake.js";
 
 const CASE_ID_PATTERN = /^INC-[A-F0-9]{24}$/;
 

@@ -7,5 +7,11 @@
     "declaration": false,
     "sourceMap": false
   },
-  "include": ["incident-intake/types.ts", "incident-intake/normalize.ts", "incident-intake/store.ts", "incident-intake/indexer.ts", "incident-intake/service.ts"]
+  "include": [
+    "hermes/types/incident-intake.ts",
+    "hermes/services/incident-intake/indexer.ts",
+    "hermes/services/incident-intake/normalize.ts",
+    "hermes/services/incident-intake/service.ts",
+    "hermes/services/incident-intake/store.ts"
+  ]
 }

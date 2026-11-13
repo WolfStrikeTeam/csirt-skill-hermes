@@ -3,7 +3,7 @@ import type {
   IOCEnrichment,
 } from "../../types/incident.ts";
 
-import { VirusTotalClient } from "./vt-client.ts";
+import { VirusTotalClient } from "./vt-client.js";
 
 export class IOCEnricher {
   constructor(private readonly vt: VirusTotalClient) {}

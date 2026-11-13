@@ -1,6 +1,6 @@
-# Incident Intake MCP — paket review tim
+# Incident Intake MCP
 
-**Status:** implementasi MVP untuk direview; belum dipush ke repo bersama, belum dihubungkan dengan Wazuh/Hermes produksi.
+**Status:** terintegrasi pada branch `feat/incident-intake`. Pengujian lokal lulus; integrasi Wazuh asli dan Hermes belum diuji.
 
 Proyek ini dibuat sesuai FigJam dan `project-overview.md` terbaru: **Hermes (MCP Client) → MCP Server (`mcp-use`) → Wazuh**. Komponen Incident Intake **mencatat kandidat kasus**, tidak melakukan triage, enrichment IOC, rekomendasi respons, atau mengeksekusi aksi respons.
 
@@ -15,45 +15,38 @@ Proyek ini dibuat sesuai FigJam dan `project-overview.md` terbaru: **Hermes (MCP
 
 ## Struktur file
 
-```text
-index.ts                        # Contoh entrypoint untuk instalasi STANDALONE
-incident-intake/
-  mcp-tools.ts                 # Integrasikan file ini ke MCP Server tim
-  types.ts                     # Kontrak IncidentCase sementara v1
-  normalize.ts                 # Validasi dan normalisasi alert/report
-  store.ts                     # Penyimpanan kasus JSON persisten
-  indexer.ts                   # HTTP client Wazuh Indexer (read-only search)
-  service.ts                   # Orkestrasi intake
-fixtures/
-  wazuh-ssh-alert.json         # Alert contoh untuk input manual MCP
-  wazuh-indexer-response.json  # Respons Indexer tiruan untuk tes
-  example-incident-case.json   # Contoh output untuk Hamza
-  ...
-tests/incident-intake.test.mjs # Test otomatis + server HTTP mock
-tsconfig.core.json             # Build domain logic untuk test
-LAPORAN-UNTUK-TIM.md           # Laporan siap dibahas bersama tim
-```
+    hermes/
+    ├── tools/incident-intake/mcp-tools.ts
+    ├── services/incident-intake/
+    │   ├── indexer.ts
+    │   ├── normalize.ts
+    │   ├── service.ts
+    │   └── store.ts
+    └── types/incident-intake.ts
+
+    index.ts
+    tests/incident-intake.test.mjs
+    fixtures/
+    tsconfig.intake.json
+    docs/incident-intake/README.md
 
 ## Prasyarat
 
 - Node.js **>= 22.22.2**, sesuai requirement repository tim.
-- NPM dan dependencies project (`mcp-use@2.12.3`, `zod@^4.6.6`, TypeScript). Dalam paket standalone ini `npm install` akan menghasilkan lock file; dalam repo tim gunakan lock yang sudah ada (`npm ci`).
+- NPM dan dependencies project (`mcp-use@2.12.3`, `zod@^4.6.6`, TypeScript). Gunakan `npm ci` dari root repository tim.
 - Untuk pengujian `intake_wazuh_alert` dari fixture, **tidak perlu Wazuh yang aktif**.
 
-## Tes lokal (terisolasi)
+## Pengujian lokal
 
-```bash
-# Dalam folder paket ini:
-node -v
-npm install
-npm test
-npm run typecheck
+Jalankan dari root repository `csirt-skill-hermes`:
 
-# Jalankan MCP Server lokal setelah dependencies terinstal
-cp .env.example .env
-npm run dev
-# Buka http://localhost:3000/mcp/inspector
-```
+    npm ci
+    npm run typecheck
+    npm run test:intake
+    npm run build
+    npm run dev
+
+Buka http://localhost:3000/mcp/inspector
 
 Pada Inspector, jalankan tool **`intake_wazuh_alert`** dengan argument:
 
@@ -77,28 +70,22 @@ Pada Inspector, jalankan tool **`intake_wazuh_alert`** dengan argument:
 
 Pemanggilan pertama `status: "created"`, pemanggilan alert identik berikutnya `status: "existing"`. Periksa `case_id`, `status: "new"`, `classification_status: "pending"`, `wazuh.rule_level`, dan `observables.source_ip`. Gunakan `get_incident_case` untuk melihat lagi kasus tersebut.
 
-## Integrasikan ke repo tim TANPA menimpa index.ts
+## Integrasi MCP Server
 
-**Jangan copy `index.ts` standalone dari paket ini ke `index.ts` repo tim.** File itu hanya untuk menjalankan paket sendiri.
+Incident Intake sudah terdaftar pada `index.ts`.
 
-1. Copy seluruh folder `incident-intake/` ke root repo `csirt-skill-hermes/`.
-2. Di `index.ts` yang SUDAH ADA di repo tim, tepat setelah `const server = new MCPServer({...});`, tambahkan:
+Import yang digunakan:
 
-```ts
-import { registerIncidentIntakeTools } from "./incident-intake/mcp-tools.js";
+    ./hermes/tools/incident-intake/mcp-tools.js
 
-// Setelah membuat objek server:
-registerIncidentIntakeTools(server);
-```
+Registrasi:
 
-3. Jangan hapus tool, prompt, Views, ataupun modul anggota tim lain. Pemanggilan register harus **sekali**.
-4. Untuk tes otomatis, copy `tests/`, `fixtures/`, dan `tsconfig.core.json` ke root repo, lalu tambah script di **package.json existing** (jangan menggantinya):
+    registerIncidentIntakeTools(server);
 
-```json
-"test:intake": "tsc -p tsconfig.core.json && node --test tests/*.test.mjs"
-```
+Modul menggunakan MCP Server bersama.
+Jangan menghapus registrasi modul anggota tim lainnya.
 
-5. Jalankan `npm ci && npm run test:intake && npm run typecheck` di environment dengan Node yang sesuai. Jangan langsung push sebelum konflik nama tools dan kontrak output disetujui tim.
+Kontrak IncidentCase masih perlu direview bersama modul Triage.
 
 ## Lima MCP tools
 

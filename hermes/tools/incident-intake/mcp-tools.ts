@@ -5,10 +5,10 @@
 import type { MCPServer } from "mcp-use";
 import { z } from "zod";
 import { resolve } from "node:path";
-import { IncidentStore } from "./store.js";
-import { IncidentIntakeService } from "./service.js";
-import { indexerFromEnv } from "./indexer.js";
-import { safeText } from "./normalize.js";
+import { IncidentStore } from "../../services/incident-intake/store.js";
+import { IncidentIntakeService } from "../../services/incident-intake/service.js";
+import { indexerFromEnv } from "../../services/incident-intake/indexer.js";
+import { safeText } from "../../services/incident-intake/normalize.js";
 
 /** Side-effect registration; call exactly once on a server instance. */
 export function registerIncidentIntakeTools(server: MCPServer): void {

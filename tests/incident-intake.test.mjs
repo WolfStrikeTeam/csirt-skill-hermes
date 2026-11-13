@@ -5,10 +5,10 @@ import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { IncidentStore } from "../.test-dist/incident-intake/store.js";
-import { normalizeWazuhAlert, normalizeReport, safeText } from "../.test-dist/incident-intake/normalize.js";
-import { WazuhIndexerClient, indexerFromEnv } from "../.test-dist/incident-intake/indexer.js";
-import { IncidentIntakeService } from "../.test-dist/incident-intake/service.js";
+import { IncidentStore } from "../.test-dist/hermes/services/incident-intake/store.js";
+import { normalizeWazuhAlert, normalizeReport, safeText } from "../.test-dist/hermes/services/incident-intake/normalize.js";
+import { WazuhIndexerClient, indexerFromEnv } from "../.test-dist/hermes/services/incident-intake/indexer.js";
+import { IncidentIntakeService } from "../.test-dist/hermes/services/incident-intake/service.js";
 
 const fixture = JSON.parse(await readFile(new URL("../fixtures/wazuh-ssh-alert.json", import.meta.url), "utf8"));
 const fixtureResponse = JSON.parse(await readFile(new URL("../fixtures/wazuh-indexer-response.json", import.meta.url), "utf8"));

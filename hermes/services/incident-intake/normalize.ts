@@ -1,6 +1,6 @@
 import { createHash, randomUUID } from "node:crypto";
 import { isIP } from "node:net";
-import type { IncidentCase, ReportInput } from "./types.js";
+import type { IncidentCase, ReportInput } from "../../types/incident-intake.js";
 
 const MAX_ALERT_BYTES = 128 * 1024;
 const SRC_ID = /^[a-zA-Z0-9_.-]{1,64}$/;

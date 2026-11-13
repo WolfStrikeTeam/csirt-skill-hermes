@@ -1,6 +1,6 @@
 import { normalizeReport, normalizeWazuhAlert, normalizedTime, validateSourceId } from "./normalize.js";
 import { IncidentStore } from "./store.js";
-import type { IncidentCase, IntakeResult, PullRequest, PullResult, ReportInput, WazuhAlertSource } from "./types.js";
+import type { IncidentCase, IntakeResult, PullRequest, PullResult, ReportInput, WazuhAlertSource } from "../../types/incident-intake.js";
 
 export class IncidentIntakeService {
   constructor(
