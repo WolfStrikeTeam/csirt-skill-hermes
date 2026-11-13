@@ -1,3 +1,4 @@
+import { registerIncidentIntakeTools } from "./incident-intake/mcp-tools.js";
 import { completable, MCPServer } from "mcp-use";
 import { z } from "zod";
 
@@ -7,6 +8,8 @@ const server = new MCPServer({
   version: "1.0.0",
   description: "An MCP server built with mcp-use",
 });
+
+registerIncidentIntakeTools(server);
 
 export const fetchWeather = server.tool(
   {

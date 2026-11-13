@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-11-13T08:15:21.000+0000",
+  "id": "1763021721.1091",
+  "rule": {
+    "level": 10,
+    "description": "Multiple SSH authentication failures detected",
+    "id": "5712",
+    "groups": ["syslog", "sshd", "authentication_failures"]
+  },
+  "agent": {
+    "id": "001",
+    "name": "ubuntu-lab",
+    "ip": "192.0.2.10"
+  },
+  "manager": {"name": "wazuh-manager"},
+  "data": {"srcip": "198.51.100.23", "srcuser": "example"},
+  "location": "/var/log/auth.log",
+  "full_log": "This raw log must never be copied into the incident case"
+}

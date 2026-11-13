@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": ".test-dist",
+    "rootDir": ".",
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": ["incident-intake/types.ts", "incident-intake/normalize.ts", "incident-intake/store.ts", "incident-intake/indexer.ts", "incident-intake/service.ts"]
+}

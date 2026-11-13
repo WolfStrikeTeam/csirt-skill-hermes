@@ -1,0 +1,29 @@
+{
+  "hits": {
+    "total": {"value": 2, "relation": "eq"},
+    "hits": [
+      {
+        "_index": "wazuh-alerts-4.x-2026.11.13",
+        "_id": "alert-1",
+        "_source": {
+          "timestamp": "2026-11-13T08:15:21.000+0000",
+          "id": "1763021721.1091",
+          "rule": {"id": "5712", "level": 10, "description": "Multiple SSH authentication failures detected", "groups": ["sshd"]},
+          "agent": {"id": "001", "name": "ubuntu-lab", "ip": "192.0.2.10"},
+          "data": {"srcip": "198.51.100.23"}
+        }
+      },
+      {
+        "_index": "wazuh-alerts-4.x-2026.11.13",
+        "_id": "alert-2",
+        "_source": {
+          "timestamp": "2026-11-13T08:15:31.000+0000",
+          "id": "1763021731.1092",
+          "rule": {"id": "5502", "level": 6, "description": "PAM authentication failure", "groups": ["authentication_failed"]},
+          "agent": {"id": "002", "name": "webserver-lab"},
+          "data": {"srcip": "203.0.113.77"}
+        }
+      }
+    ]
+  }
+}

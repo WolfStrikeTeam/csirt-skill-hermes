@@ -23,7 +23,8 @@
     "dev": "mcp-use dev",
     "start": "mcp-use start",
     "deploy": "mcp-use deploy",
-    "typecheck": "mcp-use typecheck"
+    "typecheck": "mcp-use typecheck",
+    "test:intake": "tsc -p tsconfig.intake.json && node --test tests/incident-intake.test.mjs"
   },
   "dependencies": {
     "mcp-use": "2.12.3",
