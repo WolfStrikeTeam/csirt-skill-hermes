@@ -1,8 +1,8 @@
 import type { IncidentInput } from "../types/incident.ts";
 import { normalizeIncident } from "./incident-normalizer.ts";
 import { extractIOCs } from "./ioc-extractor.ts";
-import { IOCValidator } from "../tools/virustotal/vt.validator.ts";
-import { IOCEnricher } from "../tools/virustotal/vt.enricher.ts";
+import { IOCValidator } from "../tools/virustotal/vt-validator.ts";
+import { IOCEnricher } from "../tools/virustotal/vt-enricher.ts";
 
 export class InvestigationService {
   constructor(

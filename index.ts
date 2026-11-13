@@ -1,11 +1,11 @@
-import { MCPServer, text } from "mcp-use/server"; // atau "mcp-use" sesuai versi package.json kamu
+import { MCPServer, text } from "mcp-use"; // atau "mcp-use" sesuai versi package.json kamu
 import { z } from "zod";
 
-import { VirusTotalClient } from "./tools/virustotal/vt.client.ts";
-import { IOCValidator } from "./tools/virustotal/vt.validator.ts";
-import { IOCEnricher } from "./tools/virustotal/vt.enricher.ts";
-import { InvestigationService } from "./services/investigation-service.ts";
-import { extractIOCs } from "./services/ioc-extractor.ts";
+import { VirusTotalClient } from "./hermes/tools/virustotal/vt-client";
+import { IOCValidator } from "./hermes/tools/virustotal/vt-validator";
+import { IOCEnricher } from "./hermes/tools/virustotal/vt-enricher";
+import { InvestigationService } from "./hermes/services/investigation-service";
+import { extractIOCs } from "./hermes/services/ioc-extractor";
 
 // Inisialisasi dependensi VirusTotal & Investigation Service
 const vt = new VirusTotalClient();

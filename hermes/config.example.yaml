@@ -20,12 +20,5 @@ mcp_servers:
       THEHIVE_ALLOW_DESTRUCTIVE_TOOLS: "false"
       # Set "false" hanya untuk lab dengan sertifikat self-signed.
   
-csirt:
-    command: "node"
-    args:
-      - "/path/to/csirt-sentinel/dist/index.js"
-    env:
-      VT_API_KEY: "<VIRUSTOTAL_API_KEY>"
-      VT_BASE_URL: "https://www.virustotal.com/api/v3"
-      VT_TIMEOUT_MS: "15000"    THEHIVE_VERIFY_SSL: "true"
+
 
