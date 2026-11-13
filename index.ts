@@ -1,59 +1,23 @@
-import { completable, MCPServer } from "mcp-use";
-import { z } from "zod";
+import { MCPServer } from "mcp-use";
 
+/**
+ * WOLFSTRIKE: MCP server for incident response, called by an AI agent (Hermes).
+ *
+ * MVP modules (each one's output feeds the next):
+ *   1. Incident Intake
+ *   2. Incident Triage & Classification (incl. MITRE ATT&CK + Cyber Kill Chain)
+ *   3. MITRE ATT&CK Mapping (standalone)
+ *   4. Threat Investigation & IOC Enrichment
+ *   5. Reporting & Response (block IP/IOC is the only executed remediation)
+ *
+ * Register tools for each module on `server` below.
+ */
 const server = new MCPServer({
   name: "wolfstrike-mcp",
-  title: "wolfstrike-mcp",
-  version: "1.0.0",
-  description: "An MCP server built with mcp-use",
+  title: "WOLFSTRIKE",
+  version: "0.1.0",
+  description:
+    "MCP server for incident response: intake, triage, MITRE ATT&CK mapping, IOC enrichment, and reporting.",
 });
-
-export const fetchWeather = server.tool(
-  {
-    name: "fetch-weather",
-    description: "Return demo weather for a city",
-    inputSchema: z.object({ city: z.string() }),
-    outputSchema: z.object({
-      city: z.string(),
-      conditions: z.string(),
-      temperature: z.string(),
-    }),
-    annotations: { readOnlyHint: true, openWorldHint: false },
-  },
-  async ({ city }) => {
-    const weather = { city, conditions: "sunny", temperature: "22°C" };
-    return {
-      content: [{ type: "text", text: JSON.stringify(weather) }],
-      structuredContent: weather,
-    };
-  }
-);
-
-server.prompt(
-  {
-    name: "review-code",
-    description: "Review code for correctness and maintainability",
-    schema: z.object({
-      language: completable(z.string(), [
-        "typescript",
-        "javascript",
-        "python",
-        "go",
-      ]),
-      code: z.string(),
-    }),
-  },
-  async ({ language, code }) => ({
-    messages: [
-      {
-        role: "user",
-        content: {
-          type: "text",
-          text: `Review this ${language} code:\n\n${code}`,
-        },
-      },
-    ],
-  })
-);
 
 export default server;
