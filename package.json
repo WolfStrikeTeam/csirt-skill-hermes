@@ -1,22 +1,30 @@
 {
   "name": "wolfstrike-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WOLFSTRIKE: MCP server for incident response (intake, triage, MITRE ATT&CK mapping, IOC enrichment, reporting)",
   "type": "module",
   "engines": {
     "node": ">=22.22.2"
   },
-  "version": "1.0.0",
-  "description": "an mcp-use server with example tools and zod validated input",
-  "author": "mcp-use",
+  "author": "Kartika-Cybersex",
   "license": "MIT",
-  "homepage": "https://github.com/mcp-use/mcp-use",
+  "homepage": "https://github.com/Kartika-Cybersex/csirt-skill-hermes",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kartika-Cybersex/csirt-skill-hermes.git"
+  },
   "keywords": [
     "mcp",
     "mcp-server",
-    "chatgpt plugins",
-    "claude connector",
-    "mcp-app",
     "mcp-use",
-    "manufact"
+    "incident-response",
+    "csirt",
+    "mitre-attack",
+    "ioc",
+    "wazuh",
+    "thehive",
+    "virustotal"
   ],
   "scripts": {
     "build": "mcp-use build",
