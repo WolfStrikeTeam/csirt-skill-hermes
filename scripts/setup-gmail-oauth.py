@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local-only Gmail OAuth bootstrap for CSIRT Incident Intake.
+"""Gmail OAuth bootstrap for CSIRT Incident Intake.
 
 Reads a Google OAuth Desktop client JSON, verifies the authorized Gmail account,
 and writes a mode-0600 shell environment outside the git repository.
@@ -48,7 +48,7 @@ def request_json(url: str, *, fields: dict[str, str] | None = None, bearer: str 
     except urllib.error.HTTPError as exc:
         raise RuntimeError(f"Google API menolak permintaan (HTTP {exc.code}); periksa OAuth consent/test user/izin Gmail") from None
     except urllib.error.URLError:
-        raise RuntimeError("Gagal menghubungi Google API; periksa koneksi internet Kali WSL") from None
+        raise RuntimeError("Gagal menghubungi Google API; periksa koneksi internet") from None
 
 
 def main() -> int:
@@ -105,13 +105,13 @@ def main() -> int:
             self.send_response(200 if good else 400)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.end_headers()
-            msg = "Authorization captured. You may return to your Kali terminal." if good else "Authorization failed. Return to the Kali terminal."
+            msg = "Authorization captured. You may return to the terminal." if good else "Authorization failed. Return to the terminal."
             self.wfile.write(f"<html><body><h2>{msg}</h2></body></html>".encode("utf-8"))
 
     try:
         server = http.server.HTTPServer(("127.0.0.1", PORT), Callback)
     except OSError:
-        print(f"Port {PORT} sedang digunakan di WSL. Tutup proses lain di port tersebut lalu ulangi.", file=sys.stderr)
+        print(f"Port {PORT} sedang digunakan. Tutup proses lain di port tersebut lalu ulangi.", file=sys.stderr)
         return 1
 
     params = {
@@ -126,7 +126,7 @@ def main() -> int:
         "code_challenge_method": "S256",
     }
     url = GOOGLE_AUTH + "?" + urllib.parse.urlencode(params)
-    print("\n1. Buka URL ini di browser Windows dan login sebagai", account)
+    print("\n1. Buka URL ini di browser dan login sebagai", account)
     print("2. Setujui akses baca Gmail (read-only).\n")
     print(url)
     print("\nBrowser akan mengarah ke 127.0.0.1:8765. Jangan tutup terminal ini.\n")
@@ -182,9 +182,10 @@ def main() -> int:
     print(f"[OK] Konfigurasi privat disimpan: {OUT_FILE}")
     print("[OK] Scope: Gmail read-only")
     print("\nJalankan MCP Server:\n")
-    print('  cd "$HOME/Kartika Cyber/csirt-skill-hermes"')
+    print('  cd /path/to/csirt-skill-hermes')
     print('  source "$HOME/.config/csirt-intake/gmail-env.sh"')
-    print('  HOST=127.0.0.1 INTAKE_DATA_DIR=$HOME/.local/share/csirt-intake/cases npm run dev')
+    print('  mkdir -p "$HOME/.local/share/csirt-intake/cases"')
+    print('  HOST=127.0.0.1 INTAKE_DATA_DIR="$HOME/.local/share/csirt-intake/cases" npm run dev')
     print("\nPENTING: Jangan jalankan mock Gmail saat pengujian inbox sungguhan.")
     return 0
 
