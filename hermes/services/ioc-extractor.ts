@@ -12,6 +12,19 @@ const patterns: Record<IOCType, RegExp> = {
   hash: /\b(?:[a-fA-F0-9]{32}|[a-fA-F0-9]{40}|[a-fA-F0-9]{64})\b/g,
 };
 
+// File extensions that are not real TLDs. Without this, "payload.exe" or
+// "invoice.pdf" in alert text matches the domain pattern. Extensions that are
+// also live TLDs (.zip, .mov, .sh, .py) are left out on purpose: dropping them
+// would hide real malicious domains.
+const FILE_EXTENSIONS = new Set([
+  "exe", "dll", "sys", "drv", "ocx", "cpl", "scr", "msi", "bat", "cmd",
+  "vbs", "vbe", "js", "jse", "wsf", "hta", "lnk", "jar", "apk", "dmg",
+  "elf", "bin", "dat", "tmp", "log", "txt", "ini", "cfg", "conf", "iso",
+  "img", "rar", "gz", "tgz", "tar", "doc", "docx", "docm", "xls", "xlsx",
+  "xlsm", "ppt", "pptx", "pdf", "html", "htm", "php", "asp", "aspx", "jsp",
+  "json", "xml", "csv",
+]);
+
 function isValidIPv4(value: string): boolean {
   const parts = value.split(".").map(Number);
 
@@ -41,6 +54,8 @@ function classify(value: string): IOCType | null {
       value
     )
   ) {
+    const tld = value.slice(value.lastIndexOf(".") + 1).toLowerCase();
+    if (FILE_EXTENSIONS.has(tld)) return null;
     return "domain";
   }
 
