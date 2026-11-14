@@ -16,6 +16,22 @@ export interface IncidentCase {
   title: string;
   description: string;
   observables: { source_ip?: string; destination_ip?: string };
+  /** Optional Gmail-specific intake context, never a classification verdict. */
+  email?: {
+    gmail_message_id: string;
+    thread_id?: string;
+    sender_redacted: string;
+    attachments: Array<{ name: string; status: "processed" | "skipped"; reason?: string }>;
+    context_excerpt: string;
+  };
+  ioc_candidates?: {
+    ips: string[];
+    domains: string[];
+    urls: string[];
+    hashes_md5: string[];
+    hashes_sha256: string[];
+    evidence: Array<{ kind: "ip" | "domain" | "url" | "md5" | "sha256"; value: string; found_in: string }>;
+  };
   wazuh?: {
     rule_id: string;
     rule_level: number;

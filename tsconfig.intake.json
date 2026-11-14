@@ -12,6 +12,10 @@
     "hermes/services/incident-intake/indexer.ts",
     "hermes/services/incident-intake/normalize.ts",
     "hermes/services/incident-intake/service.ts",
-    "hermes/services/incident-intake/store.ts"
+    "hermes/services/incident-intake/store.ts",
+    "hermes/services/incident-intake/gmail-client.ts",
+    "hermes/services/incident-intake/gmail-parser.ts",
+    "hermes/services/incident-intake/gmail-service.ts",
+    "hermes/services/incident-intake/ioc-candidates.ts"
   ]
 }
