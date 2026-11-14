@@ -3,6 +3,7 @@ import type {
   ExtractedIOC,
   IOCType,
 } from "../types/incident.ts";
+import { IANA_TLDS } from "./tlds.ts";
 
 const patterns: Record<IOCType, RegExp> = {
   ip: /\b(?:\d{1,3}\.){3}\d{1,3}\b/g,
@@ -12,18 +13,21 @@ const patterns: Record<IOCType, RegExp> = {
   hash: /\b(?:[a-fA-F0-9]{32}|[a-fA-F0-9]{40}|[a-fA-F0-9]{64})\b/g,
 };
 
-// File extensions that are not real TLDs. Without this, "payload.exe" or
-// "invoice.pdf" in alert text matches the domain pattern. Extensions that are
-// also live TLDs (.zip, .mov, .sh, .py) are left out on purpose: dropping them
-// would hide real malicious domains.
-const FILE_EXTENSIONS = new Set([
-  "exe", "dll", "sys", "drv", "ocx", "cpl", "scr", "msi", "bat", "cmd",
-  "vbs", "vbe", "js", "jse", "wsf", "hta", "lnk", "jar", "apk", "dmg",
-  "elf", "bin", "dat", "tmp", "log", "txt", "ini", "cfg", "conf", "iso",
-  "img", "rar", "gz", "tgz", "tar", "doc", "docx", "docm", "xls", "xlsx",
-  "xlsm", "ppt", "pptx", "pdf", "html", "htm", "php", "asp", "aspx", "jsp",
-  "json", "xml", "csv",
+// Suffixes used on internal networks that are not in the IANA root zone.
+// Internal hostnames (e.g. wiki.corp.local) are still useful IOCs/assets.
+const PRIVATE_SUFFIXES = new Set([
+  "local", "localdomain", "lan", "internal", "intranet", "corp", "home",
 ]);
+
+// A dotted token only counts as a domain when its last label is a real TLD.
+// This rejects file names (payload.exe, invoice.pdf) and code tokens
+// (http.server, os.path) without a hand-kept extension list. Extensions that
+// are also live TLDs (.zip, .mov, .sh, .py) still count as domains on purpose:
+// dropping them would hide real malicious domains.
+function hasKnownTld(value: string): boolean {
+  const tld = value.slice(value.lastIndexOf(".") + 1).toLowerCase();
+  return IANA_TLDS.has(tld) || PRIVATE_SUFFIXES.has(tld);
+}
 
 function isValidIPv4(value: string): boolean {
   const parts = value.split(".").map(Number);
@@ -54,9 +58,7 @@ function classify(value: string): IOCType | null {
       value
     )
   ) {
-    const tld = value.slice(value.lastIndexOf(".") + 1).toLowerCase();
-    if (FILE_EXTENSIONS.has(tld)) return null;
-    return "domain";
+    return hasKnownTld(value) ? "domain" : null;
   }
 
   return null;
