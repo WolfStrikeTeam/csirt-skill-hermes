@@ -10,8 +10,8 @@ import { normalizeWazuhAlert, normalizeReport, safeText } from "../.test-dist/he
 import { WazuhIndexerClient, indexerFromEnv } from "../.test-dist/hermes/services/incident-intake/indexer.js";
 import { IncidentIntakeService } from "../.test-dist/hermes/services/incident-intake/service.js";
 
-const fixture = JSON.parse(await readFile(new URL("../fixtures/wazuh-ssh-alert.json", import.meta.url), "utf8"));
-const fixtureResponse = JSON.parse(await readFile(new URL("../fixtures/wazuh-indexer-response.json", import.meta.url), "utf8"));
+const fixture = JSON.parse(await readFile(new URL("./data/wazuh-ssh-alert.json", import.meta.url), "utf8"));
+const fixtureResponse = JSON.parse(await readFile(new URL("./data/wazuh-indexer-response.json", import.meta.url), "utf8"));
 function clone(value) { return structuredClone(value); }
 async function withStore(fn) {
   const dir = await mkdtemp(join(tmpdir(), "incident-intake-test-"));
