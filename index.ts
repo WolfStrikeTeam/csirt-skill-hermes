@@ -94,15 +94,15 @@ server.tool(
     }),
   },
   async (args) => {
-    // Placeholder logic: dapat dihubungkan ke TriageService di masa mendatang
+    // Belum ada logika triage. Sengaja tidak mengembalikan classification,
+    // severity, atau fase kill chain: nilai karangan dibaca agent sebagai
+    // konfirmasi (lihat docs/testing/INC-001.md). Hubungkan ke TriageService nanti.
     const triageResult = {
       incidentId: args.incidentId,
-      classification: "Suspicious Activity",
-      recommendedSeverity: args.severity ?? "medium",
-      cyberKillChainPhase: "Command and Control / Exploitation",
-      initialMitreTactics: ["TA0001 - Initial Access", "TA0011 - Command and Control"],
-      readyForInvestigation: true,
-      summary: `Triaged incident '${args.title}' with ${args.extractedIOCs?.length ?? 0} observables.`,
+      status: "not-implemented",
+      note: "Triage logic is not implemented yet. This tool did not assess severity, classification, or kill chain phase; the analyst must derive them from evidence.",
+      inputSeverity: args.severity ?? null,
+      observableCount: args.extractedIOCs?.length ?? 0,
     };
 
     return text(JSON.stringify(triageResult, null, 2));
@@ -123,19 +123,15 @@ server.tool(
     }),
   },
   async ({ behaviorDescription, evidence }) => {
-    // Placeholder logic: dapat dihubungkan ke rule/embedding mapper MITRE ATT&CK
+    // Belum ada mapper. Sebelumnya selalu mengembalikan T1059 apa pun input-nya,
+    // dan agent ikut mempertahankannya (docs/testing/INC-001.md). Hubungkan ke
+    // rule/embedding mapper MITRE ATT&CK nanti.
     const mappingResult = {
+      status: "not-implemented",
+      note: "MITRE ATT&CK mapping is not implemented yet. No techniques were derived from the input; map only what the evidence supports.",
       input: behaviorDescription,
       evidenceCount: evidence?.length ?? 0,
-      mappings: [
-        {
-          tactic: "Execution",
-          tacticId: "TA0002",
-          technique: "Command and Scripting Interpreter",
-          techniqueId: "T1059",
-          confidence: "medium",
-        },
-      ],
+      mappings: [],
     };
 
     return text(JSON.stringify(mappingResult, null, 2));
