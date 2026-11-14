@@ -1,0 +1,42 @@
+# Weekly refresh of the bundled IANA TLD list used by extract_iocs.
+# Opens a PR only when IANA published a new version; nothing changes at runtime
+# until someone reviews and merges it.
+name: update-tlds
+
+on:
+  schedule:
+    - cron: "0 2 * * 1" # Monday 02:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Regenerate hermes/services/tlds.ts
+        run: node scripts/update-tlds.mjs
+
+      - name: Open PR if the list changed
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/update-tlds
+          delete-branch: true
+          commit-message: "chore(ioc): refresh bundled IANA TLD list"
+          title: "chore(ioc): refresh bundled IANA TLD list"
+          body: |
+            Automated weekly refresh of `hermes/services/tlds.ts` from
+            https://data.iana.org/TLD/tlds-alpha-by-domain.txt.
+
+            `extract_iocs` only reports a domain when its TLD is in this list
+            (or in `WOLFSTRIKE_EXTRA_TLDS`), so new TLDs are missed until this
+            is merged.
+          add-paths: hermes/services/tlds.ts

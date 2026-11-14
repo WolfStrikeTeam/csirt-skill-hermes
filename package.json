@@ -31,7 +31,8 @@
     "dev": "mcp-use dev",
     "start": "mcp-use start",
     "deploy": "mcp-use deploy",
-    "typecheck": "mcp-use typecheck"
+    "typecheck": "mcp-use typecheck",
+    "update-tlds": "node scripts/update-tlds.mjs"
   },
   "dependencies": {
     "mcp-use": "2.12.3",
