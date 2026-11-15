@@ -70,7 +70,7 @@ function patchBundle(src, { name, logo }) {
   const [, markVar, jsxNs, sizeVar, labelVar, showVar] = m;
   const img =
     `, ${markVar} = (0, ${jsxNs}.jsx)("img", { src: ${JSON.stringify(logo)}, alt: ${JSON.stringify(name)}, ` +
-    `draggable: false, className: "shrink-0 object-contain", style: { width: ${sizeVar}, height: ${sizeVar} } }), ` +
+    `draggable: false, className: "shrink-0 object-contain", style: { width: "auto", height: ${sizeVar} } }), ` +
     `${labelVar} = ${showVar} ? `;
   fn = fn.replace(markRe, () => img);
 
