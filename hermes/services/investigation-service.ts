@@ -1,4 +1,4 @@
-import type { IncidentInput } from "../types/incident.ts";
+import type { IncidentInput } from "../types/incident.js";
 import { normalizeIncident } from "./incident-normalizer.js";
 import { extractIOCs } from "./ioc-extractor.js";
 import { IOCValidator } from "../tools/virustotal/vt-validator.js";

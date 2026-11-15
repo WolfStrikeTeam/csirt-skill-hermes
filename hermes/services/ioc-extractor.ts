@@ -2,8 +2,8 @@ import type {
   IncidentInput,
   ExtractedIOC,
   IOCType,
-} from "../types/incident.ts";
-import { IANA_TLDS } from "./tlds.ts";
+} from "../types/incident.js";
+import { IANA_TLDS } from "./tlds.js";
 
 const patterns: Record<IOCType, RegExp> = {
   ip: /\b(?:\d{1,3}\.){3}\d{1,3}\b/g,

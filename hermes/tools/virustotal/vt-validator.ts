@@ -2,7 +2,7 @@ import type {
   ExtractedIOC,
   IOCValidation,
   IOCVerdict,
-} from "../../types/incident.ts";
+} from "../../types/incident.js";
 
 import { VirusTotalClient } from "./vt-client.js";
 
