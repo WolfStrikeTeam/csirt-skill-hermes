@@ -7,8 +7,13 @@ skills:
   external_dirs:
     - <path-ke-clone>/csirt-skill-hermes/hermes/skills
 
-# Koneksi ke TheHive 5 lewat thehive-mcp (https://github.com/solomonneas/thehive-mcp)
 mcp_servers:
+  # WOLFSTRIKE: MCP server repo ini. Jalankan dulu `npm run dev` di root repo.
+  # Ganti URL kalau server jalan di host atau port lain.
+  wolfstrike:
+    url: "http://localhost:3000/mcp"
+
+  # Koneksi ke TheHive 5 lewat thehive-mcp (https://github.com/solomonneas/thehive-mcp)
   thehive:
     command: "npx"
     args: ["-y", "thehive-mcp"]

@@ -1,4 +1,4 @@
-import type { IncidentInput } from "../types/incident.ts";
+import type { IncidentInput } from "../types/incident.js";
 
 export function normalizeIncident(
   input: IncidentInput

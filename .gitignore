@@ -42,3 +42,13 @@ Thumbs.db
 *.swo
 *~
 
+/.test-dist/
+/data/incident-intake/
+
+# Local Gmail CSIRT OAuth credentials (never commit)
+client_secret_*.json
+gmail-env.sh
+*.oauth-token.json
+.env
+.env.*
+!.env.example

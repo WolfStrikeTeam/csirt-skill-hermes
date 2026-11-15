@@ -2,9 +2,9 @@ import type {
   ExtractedIOC,
   IOCValidation,
   IOCVerdict,
-} from "../../types/incident.ts";
+} from "../../types/incident.js";
 
-import { VirusTotalClient } from "./vt-client.ts";
+import { VirusTotalClient } from "./vt-client.js";
 
 export class IOCValidator {
   constructor(private readonly vt: VirusTotalClient) {}
