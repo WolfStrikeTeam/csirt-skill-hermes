@@ -32,10 +32,12 @@
     "start": "mcp-use start",
     "deploy": "mcp-use deploy",
     "typecheck": "mcp-use typecheck",
-    "update-tlds": "node scripts/update-tlds.mjs"
+    "update-tlds": "node scripts/update-tlds.mjs",
+    "test:intake": "tsc -p tsconfig.intake.json && node --test tests/incident-intake.test.mjs tests/gmail-intake.test.mjs"
   },
   "dependencies": {
     "mcp-use": "2.12.3",
+    "pdfjs-dist": "^6.5.438",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "zod": "^4.6.6"
