@@ -33,6 +33,8 @@
     "deploy": "mcp-use deploy",
     "typecheck": "mcp-use typecheck",
     "update-tlds": "node scripts/update-tlds.mjs",
+    "brand-inspector": "node scripts/brand-inspector.mjs",
+    "postinstall": "node scripts/brand-inspector.mjs",
     "test:intake": "tsc -p tsconfig.intake.json && node --test tests/incident-intake.test.mjs tests/gmail-intake.test.mjs"
   },
   "dependencies": {
