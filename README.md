@@ -89,13 +89,13 @@ Tool modul 2–5 didaftarkan di [`index.ts`](index.ts). Tool intake (Wazuh, Gmai
 | `pull_csirt_gmail_reports` | 1 | Tarik laporan dari mailbox Gmail CSIRT (read-only), baca lampiran yang diizinkan, ekstrak kandidat IOC | `GMAIL_*` | ✅ Jalan |
 | `get_incident_case` | 1 | Baca satu case yang sudah tercatat, buat diteruskan ke modul berikutnya | – | ✅ Jalan |
 | `list_incident_cases` | 1 | Daftar ringkasan case yang sudah tercatat | – | ✅ Jalan |
-| `triage_incident` | 2 | Klasifikasi severity, kemungkinan false positive, fase Kill Chain | – | 🚧 Belum diimplementasi |
-| `map_mitre_attack` | 3 | Petakan perilaku atau log ke tactic dan technique MITRE ATT&CK | – | 🚧 Belum diimplementasi |
+| `triage_incident` | 2 | Klasifikasi severity, kemungkinan false positive, fase Kill Chain | – | ✅ Jalan |
+| `map_mitre_attack` | 3 | Petakan perilaku atau log ke tactic dan technique MITRE ATT&CK | – | ✅ Jalan |
 | `investigate_incident` | 4 | Alur lengkap: extract → validate → enrich IOC | `VT_API_KEY` | ✅ Jalan |
 | `extract_iocs` | 4 | Ekstrak dan dedup IOC dari teks insiden dan evidence | – | ✅ Jalan |
 | `validate_iocs` | 4 | Validasi maks. 20 IP, domain, URL, atau hash lewat lookup pasif VirusTotal | `VT_API_KEY` | ✅ Jalan |
 | `enrich_ioc` | 4 | Ambil atribut tambahan satu IOC dari VirusTotal | `VT_API_KEY` | ✅ Jalan |
-| `respond_and_report` | 5 | Susun laporan insiden dan catat aksi block IOC | – | ⚠️ Sebagian |
+| `respond_and_report` | 5 | Susun laporan insiden dan catat aksi block IOC | – | ✅ Jalan |
 
 Catatan status:
 
